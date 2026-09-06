@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -18,7 +18,7 @@ class AnalyzeRequest(BaseModel):
     job_title: str = Field(..., min_length=2)
     job_description: str = Field(..., min_length=50)
     candidates: list[CandidateInput] = Field(..., min_length=1)
-    role_family: RoleFamily | None = None
+    role_family: Optional[RoleFamily] = None
     must_have_skills: list[str] = Field(default_factory=list)
     nice_to_have_skills: list[str] = Field(default_factory=list)
 
@@ -51,10 +51,10 @@ class AnalyzeResponse(BaseModel):
 class UploadProfilePreview(BaseModel):
     file_name: str
     status: Literal["ok", "error"]
-    candidate_name: str | None = None
-    years_experience: float | None = None
+    candidate_name: Optional[str] = None
+    years_experience: Optional[float] = None
     detected_skills: list[str] = Field(default_factory=list)
-    message: str | None = None
+    message: Optional[str] = None
 
 
 class PreviewFilesResponse(BaseModel):
@@ -86,7 +86,7 @@ class SkillGapResult(BaseModel):
     gap_severity: GapSeverity
     match_percentage: float
     required_skills: list[str]
-    narrative: str | None = None          # LLM-generated; None when unavailable
+    narrative: Optional[str] = None          # LLM-generated; None when unavailable
 
 
 class ResumeSuggestion(BaseModel):
@@ -97,14 +97,14 @@ class ResumeSuggestion(BaseModel):
 
 class ResumeImprovementResult(BaseModel):
     suggestions: list[ResumeSuggestion]
-    summary: str | None = None            # LLM-generated; None when unavailable
+    summary: Optional[str] = None            # LLM-generated; None when unavailable
 
 
 class CandidateProfileAnalysis(BaseModel):
     skill_gap: SkillGapResult
     resume_improvement: ResumeImprovementResult
     llm_available: bool
-    llm_error: str | None = None          # Human-readable error when llm_available=False
+    llm_error: Optional[str] = None          # Human-readable error when llm_available=False
 
 
 # --- Interview Questions ---
@@ -114,7 +114,7 @@ class InterviewQuestion(BaseModel):
     text: str
     topic: str
     difficulty: QuestionDifficulty
-    target_skill: str | None = None
+    target_skill: Optional[str] = None
     question_type: QuestionType
 
 
@@ -128,7 +128,7 @@ class GenerateQuestionsRequest(BaseModel):
 class GenerateQuestionsResponse(BaseModel):
     questions: list[InterviewQuestion]
     llm_available: bool
-    llm_error: str | None = None
+    llm_error: Optional[str] = None
 
 
 # --- Mock Interview ---
@@ -145,7 +145,7 @@ class MockInterviewStartResponse(BaseModel):
     first_question: InterviewQuestion
     total_planned: int
     llm_available: bool
-    llm_error: str | None = None
+    llm_error: Optional[str] = None
 
 
 class AnswerScores(BaseModel):
@@ -173,11 +173,11 @@ class MockInterviewAnswerRequest(BaseModel):
 
 class MockInterviewAnswerResponse(BaseModel):
     feedback: AnswerFeedback
-    next_question: InterviewQuestion | None
+    next_question: Optional[InterviewQuestion] = None
     question_number: int                  # 1-based index of the question just answered
     total_questions: int
     is_complete: bool
-    llm_error: str | None = None
+    llm_error: Optional[str] = None
 
 
 # --- Readiness Report ---
@@ -185,7 +185,7 @@ class MockInterviewAnswerResponse(BaseModel):
 class ReadinessScoreBreakdown(BaseModel):
     skill_coverage_score: float           # deterministic
     resume_job_match_score: float         # deterministic
-    interview_performance_score: float | None = None    # average of overall_answer_score values or None if 0 answers
+    interview_performance_score: Optional[float] = None    # average of overall_answer_score values or None if 0 answers
     experience_score: float               # deterministic (reuses scoring.py logic)
     final_score: float                    # weighted formula
     weights: dict[str, float]
@@ -207,16 +207,13 @@ class InterviewSummaryResponse(BaseModel):
     readiness_score: float
     readiness_band: ReadinessBand
     score_breakdown: ReadinessScoreBreakdown
-    narrative: str | None = None          # LLM-generated; None when unavailable
+    narrative: Optional[str] = None          # LLM-generated; None when unavailable
     questions_answered: int
     average_answer_score: float
     dimension_averages: dict[str, float] = Field(default_factory=dict)
     preparation_roadmap: list[PreparationRoadmapItem]
     llm_available: bool
-    llm_error: str | None = None
+    llm_error: Optional[str] = None
     is_complete: bool = False
     assessment_status: str = "final"
     status_message: str = ""
-
-
-

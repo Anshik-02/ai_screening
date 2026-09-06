@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -31,7 +33,7 @@ app.mount("/static", StaticFiles(directory="src/app/web/static"), name="static")
 from app.services import llm_client
 
 @app.get("/health")
-def health() -> dict[str, str | bool]:
+def health() -> dict[str, Any]:
     return {
         "status": "ok",
         "llm_configured": llm_client.is_available(),

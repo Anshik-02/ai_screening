@@ -32,7 +32,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Optional
 
 from app.schemas import (
     AnswerFeedback,
@@ -108,8 +108,8 @@ _GENERIC_QUESTIONS: list[tuple[str, str, str, str]] = [
 @dataclass
 class _QuestionRecord:
     question: InterviewQuestion
-    answer: str | None = None
-    feedback: AnswerFeedback | None = None
+    answer: Optional[str] = None
+    feedback: Optional[AnswerFeedback] = None
 
 
 @dataclass
@@ -751,7 +751,7 @@ def _fallback_roadmap(gap_data: dict[str, Any], band: str) -> list[PreparationRo
 
 def _next_planned_question(
     session: _InterviewSession, current_idx: int
-) -> InterviewQuestion | None:
+) -> Optional[InterviewQuestion]:
     """Return the next unanswered planned question after current_idx."""
     for record in session.questions[current_idx + 1:]:
         if record.answer is None:

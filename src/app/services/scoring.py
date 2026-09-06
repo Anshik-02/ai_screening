@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast
+from typing import Optional, cast
 
 from app.services.skill_taxonomy import (
     ROLE_PROFILE_WEIGHTS,
@@ -16,7 +16,7 @@ from app.schemas import CandidateInput, CandidateScore
 def build_skill_context(
     job_title: str,
     job_description: str,
-    role_family: str | None,
+    role_family: Optional[str],
     must_have_skills: list[str],
     nice_to_have_skills: list[str],
 ) -> tuple[RoleFamily, list[str], list[str], list[str]]:

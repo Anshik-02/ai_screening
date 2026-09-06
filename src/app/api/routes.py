@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from typing import Optional
+
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.schemas import (
@@ -100,7 +102,7 @@ async def preview_files(resumes: list[UploadFile] = File(...)) -> PreviewFilesRe
 async def analyze_files(
     job_title: str = Form(...),
     job_description: str = Form(...),
-    role_family: str | None = Form(default=None),
+    role_family: Optional[str] = Form(default=None),
     must_have_skills: str = Form(default=""),
     nice_to_have_skills: str = Form(default=""),
     resumes: list[UploadFile] = File(...),
