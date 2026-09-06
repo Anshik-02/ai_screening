@@ -8,6 +8,8 @@ All endpoints are under /v1/candidate/.
     This is intentional — no user data is persisted.
 """
 
+from __future__ import annotations
+
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.schemas import (
