@@ -21,8 +21,8 @@ Before starting, ensure you have:
 Open your Terminal (macOS/Linux) or PowerShell/Command Prompt (Windows) and run:
 
 ```bash
-git clone https://github.com/Anshik-02/TalentRank-Studio-AI-Resume-Screening.git
-cd TalentRank-Studio-AI-Resume-Screening
+git clone https://github.com/Anshik-02/ai_screening.git
+cd ai_screening
 ```
 
 ---
