@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TalentRank Studio | AI Resume Screening</title>
+  <title>TalentRank Studio | AI Resume Screening & Candidate Prep</title>
+  <meta name="description" content="AI-powered recruiter dashboard for explainable resume screening, and personalized interview preparation for candidates." />
+  <meta name="theme-color" content="#0b0f19" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230b0f19'/%3E%3Cpath d='M8 22V10l8 6 8-6v12' fill='none' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -14,127 +17,711 @@
   <div class="bg-glow bg-glow-b"></div>
 
   <main class="page-wrap">
-    <section class="hero reveal">
-      <p class="eyebrow">Flagship Demo</p>
-      <h1>TalentRank Studio</h1>
-      <p class="hero-copy">
-        Screen tech candidates with explainable AI ranking, semantic skill matching, and shortlist-ready recruiter insights.
-      </p>
-      <div class="hero-metrics">
-        <div class="metric-card reveal-stagger">
-          <span class="metric-label">Role Profiles</span>
-          <span class="metric-value">5</span>
+
+    <!-- ── Executive App Header & Navigation ─────────────────────── -->
+    <header class="app-header">
+      <div class="brand-container">
+        <div class="brand-logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M6 24V8l10 7.5L26 8v16" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="logoGrad" x1="6" y1="8" x2="26" y2="24"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>
+          </span>
+          <span>Talent<span class="brand-accent">Rank</span></span>
+          <span class="brand-badge">Studio</span>
         </div>
-        <div class="metric-card reveal-stagger">
-          <span class="metric-label">Scoring Mode</span>
-          <span class="metric-value">Hybrid</span>
-        </div>
-        <div class="metric-card reveal-stagger">
-          <span class="metric-label">Explainability</span>
-          <span class="metric-value">Full</span>
+        <div class="header-status-pill" id="header-status-pill">
+          <span class="status-indicator-dot pulsing"></span>
+          <span id="header-status-text">AI Engine Ready</span>
         </div>
       </div>
-    </section>
 
-    <section class="dashboard-grid">
-      <article class="panel panel-form reveal">
-        <h2>Job Context</h2>
-        <form id="analysis-form">
-          <label for="job-title">Job Title</label>
-          <input id="job-title" name="job-title" required value="Senior Backend Python Engineer" />
+      <nav class="mode-nav" role="tablist" aria-label="Application mode">
+        <button id="nav-recruiter" class="mode-nav-btn active" role="tab" aria-selected="true" data-mode="recruiter">
+          <span class="mode-nav-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          </span>
+          Recruiter
+        </button>
+        <button id="nav-candidate" class="mode-nav-btn" role="tab" aria-selected="false" data-mode="candidate">
+          <span class="mode-nav-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          Candidate
+        </button>
+      </nav>
+    </header>
 
-          <label for="role-family">Role Family</label>
-          <select id="role-family" name="role-family">
-            <option value="backend">Backend</option>
-            <option value="frontend">Frontend</option>
-            <option value="data_ai">Data/AI</option>
-            <option value="devops">DevOps</option>
-            <option value="fullstack">Fullstack</option>
-          </select>
 
-          <label for="job-description">Job Description</label>
-          <textarea id="job-description" name="job-description" rows="6" required>Looking for an engineer experienced in Python, FastAPI, PostgreSQL, Docker, and AWS. Must own API performance, observability, and reliable delivery in production.</textarea>
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!--  RECRUITER VIEW  (existing — untouched)                     -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <div id="recruiter-view" role="tabpanel" aria-labelledby="nav-recruiter">
 
-          <label for="must-have">Must-Have Skills (comma-separated)</label>
-          <input id="must-have" name="must-have" value="python, fastapi, aws" />
+      <section class="hero reveal">
+        <p class="eyebrow">Enterprise Hiring Platform</p>
+        <h1>Screen candidates with confidence</h1>
+        <p class="hero-copy">
+          Explainable AI ranking, semantic skill matching, and shortlist-ready insights — built for modern tech hiring teams.
+        </p>
+        <div class="hero-metrics">
+          <div class="metric-card reveal-stagger">
+            <span class="metric-label">Role Profiles</span>
+            <span class="metric-value">5</span>
+          </div>
+          <div class="metric-card reveal-stagger">
+            <span class="metric-label">Scoring Mode</span>
+            <span class="metric-value">Hybrid</span>
+          </div>
+          <div class="metric-card reveal-stagger">
+            <span class="metric-label">Explainability</span>
+            <span class="metric-value">Full</span>
+          </div>
+        </div>
+      </section>
 
-          <label for="nice-to-have">Nice-To-Have Skills (comma-separated)</label>
-          <input id="nice-to-have" name="nice-to-have" value="kubernetes, terraform, github actions" />
+      <section class="dashboard-grid">
+        <article class="panel panel-form reveal">
+          <h2>Job Context</h2>
+          <form id="analysis-form">
+            <label for="job-title">Job Title</label>
+            <input id="job-title" name="job-title" required value="Senior Backend Python Engineer" />
 
-          <h3>Analysis Mode</h3>
-          <div class="mode-switch" role="radiogroup" aria-label="Analysis mode">
-            <label class="mode-pill">
-              <input type="radio" name="analysis-mode" value="text" checked />
-              <span>Paste Resume Text</span>
-            </label>
-            <label class="mode-pill">
-              <input type="radio" name="analysis-mode" value="files" />
-              <span>Upload Resume Files</span>
-            </label>
+            <label for="role-family">Role Family</label>
+            <select id="role-family" name="role-family">
+              <option value="backend">Backend</option>
+              <option value="frontend">Frontend</option>
+              <option value="data_ai">Data/AI</option>
+              <option value="devops">DevOps</option>
+              <option value="fullstack">Fullstack</option>
+            </select>
+
+            <label for="job-description">Job Description</label>
+            <textarea id="job-description" name="job-description" rows="6" required>Looking for an engineer experienced in Python, FastAPI, PostgreSQL, Docker, and AWS. Must own API performance, observability, and reliable delivery in production.</textarea>
+
+            <label for="must-have">Must-Have Skills (comma-separated)</label>
+            <input id="must-have" name="must-have" value="python, fastapi, aws" />
+
+            <label for="nice-to-have">Nice-To-Have Skills (comma-separated)</label>
+            <input id="nice-to-have" name="nice-to-have" value="kubernetes, terraform, github actions" />
+
+            <h3>Analysis Mode</h3>
+            <div class="mode-switch" role="radiogroup" aria-label="Analysis mode">
+              <label class="mode-pill">
+                <input type="radio" name="analysis-mode" value="text" checked />
+                <span>Paste Resume Text</span>
+              </label>
+              <label class="mode-pill">
+                <input type="radio" name="analysis-mode" value="files" />
+                <span>Upload Resume Files</span>
+              </label>
+            </div>
+
+            <h3>Candidate Input</h3>
+            <section id="text-mode-section" class="mode-section">
+              <div id="candidate-list" class="candidate-list"></div>
+            </section>
+
+            <section id="file-mode-section" class="mode-section hidden-mode">
+              <label for="resume-files">Resume Files (PDF, DOCX, TXT)</label>
+              <input id="resume-files" class="hidden-file-input" type="file" accept=".pdf,.docx,.txt" multiple />
+              <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Upload resume files">
+                <p class="drop-title">Drop files here or click to browse</p>
+                <p class="drop-subtitle">Supports PDF, DOCX, TXT</p>
+              </div>
+              <p class="field-note">
+                Candidate name and years of experience are auto-extracted from resume content.
+              </p>
+              <div id="upload-preview" class="upload-preview empty-state">
+                <p>No files selected.</p>
+              </div>
+              <div id="preview-status" class="preview-status hidden"></div>
+              <div id="profile-preview-cards" class="profile-preview-cards empty-state">
+                <p>Parsed profile previews will appear here.</p>
+              </div>
+            </section>
+
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" id="add-candidate">Add Candidate</button>
+              <button type="submit" class="btn btn-primary">Run AI Screening</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel panel-results reveal">
+          <div class="results-header">
+            <h2>Leaderboard</h2>
+            <p id="result-subtitle">Run an analysis to view ranked candidates.</p>
           </div>
 
-          <h3>Candidate Input</h3>
-          <section id="text-mode-section" class="mode-section">
-            <div id="candidate-list" class="candidate-list"></div>
-          </section>
+          <div id="status-banner" class="status-banner hidden"></div>
 
-          <section id="file-mode-section" class="mode-section hidden-mode">
-            <label for="resume-files">Resume Files (PDF, DOCX, TXT)</label>
-            <input id="resume-files" class="hidden-file-input" type="file" accept=".pdf,.docx,.txt" multiple />
-            <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Upload resume files">
-              <p class="drop-title">Drop files here or click to browse</p>
-              <p class="drop-subtitle">Supports PDF, DOCX, TXT</p>
+          <div id="leaderboard" class="leaderboard empty-state">
+            <p>No results yet. Use the form to generate a shortlist.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel comparison-panel reveal">
+        <h2>Candidate Comparison</h2>
+        <div class="comparison-controls">
+          <div>
+            <label for="compare-a">Candidate A</label>
+            <select id="compare-a"></select>
+          </div>
+          <div>
+            <label for="compare-b">Candidate B</label>
+            <select id="compare-b"></select>
+          </div>
+        </div>
+        <div id="comparison-content" class="comparison-content empty-state">
+          <p>Run analysis and select two candidates to compare score components.</p>
+        </div>
+      </section>
+
+    </div><!-- /recruiter-view -->
+
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <!--  CANDIDATE VIEW (Guided 5-Stage Professional Journey)        -->
+    <!-- ════════════════════════════════════════════════════════════ -->
+    <div id="candidate-view" class="hidden" role="tabpanel" aria-labelledby="nav-candidate">
+
+      <!-- ── Presentation Mode Toolbar ──────────────────────────── -->
+      <div class="c-presentation-bar" id="c-presentation-bar" role="toolbar" aria-label="Presentation navigation">
+        <div class="c-pres-nav">
+          <button class="c-pres-btn" id="c-pres-prev" aria-label="Previous stage">← Previous Stage</button>
+          <span class="c-pres-stage-label" id="c-pres-stage-label">Stage 1 of 5</span>
+          <button class="c-pres-btn" id="c-pres-next" aria-label="Next stage">Next Stage →</button>
+        </div>
+        <span class="c-pres-mode-label">Presentation Mode</span>
+      </div>
+
+      <!-- ── Enhanced Hero ──────────────────────────────────────── -->
+      <section class="hero hero-candidate reveal" id="c-hero">
+        <span class="c-hero-tagline">AI Career Intelligence</span>
+        <h1>Your Personal Interview &amp; Career Coach</h1>
+        <span class="c-hero-dynamic-text" id="c-hero-dynamic">Let's find out how ready you are for your next role.</span>
+        <div class="c-hero-controls">
+          <button class="btn-demo" id="c-demo-btn" aria-label="Try live demo scenario">✨ Try Live Demo</button>
+          <button class="btn-presentation" id="c-pres-toggle" aria-pressed="false">🎬 Presentation Mode</button>
+          <button class="btn-restart-demo" id="c-restart-demo-btn" aria-label="Restart demo to Stage 1">↻ Restart Demo</button>
+          <span class="c-engine-status rule-mode" id="c-engine-status" title="Analysis engine status">
+            <span class="c-engine-dot"></span>
+            <span id="c-engine-label">Rule-Based Intelligence</span>
+          </span>
+        </div>
+        <div class="hero-metrics hero-metrics-spaced">
+          <div class="metric-card reveal-stagger"><span class="metric-label">Gap Analysis</span><span class="metric-value">Deterministic</span></div>
+          <div class="metric-card reveal-stagger"><span class="metric-label">Mock Interview</span><span class="metric-value">Adaptive AI</span></div>
+          <div class="metric-card reveal-stagger"><span class="metric-label">Readiness Score</span><span class="metric-value">0–100 Weighted</span></div>
+        </div>
+      </section>
+
+      <!-- Demo Mode Banner -->
+      <div class="c-demo-banner" id="c-demo-banner" role="status">
+        <span>🎭</span>
+        <span><strong>DEMO SCENARIO</strong> — Alex Rivera · Backend Python Engineer · Deterministic Mode</span>
+        <button class="c-demo-exit-btn" id="c-demo-exit-btn">Exit Demo</button>
+      </div>
+
+      <!-- LLM status banner -->
+      <div id="c-llm-banner" class="llm-banner hidden" role="alert">
+        <span class="llm-banner-icon">⚡</span>
+        <div class="llm-banner-content">
+          <span id="c-llm-banner-msg">AI Mode Active.</span>
+          <span class="llm-banner-sub">Deterministic rule-based fallback is always available.</span>
+        </div>
+      </div>
+
+      <!-- ── Step Progress Stepper ───────────────────────────────── -->
+      <nav class="c-stepper" id="c-stepper" aria-label="Candidate Preparation Progress">
+        <div class="c-step active" data-step="1" tabindex="0" role="button" aria-label="Step 1: Profile & Role">
+          <span class="c-step-num">1</span><span class="c-step-title">Profile &amp; Role</span>
+        </div>
+        <div class="c-step-line"></div>
+        <div class="c-step" data-step="2" tabindex="0" role="button" aria-label="Step 2: Skill Gap Analysis">
+          <span class="c-step-num">2</span><span class="c-step-title">Skill Gap</span>
+        </div>
+        <div class="c-step-line"></div>
+        <div class="c-step" data-step="3" tabindex="0" role="button" aria-label="Step 3: Resume Improvements">
+          <span class="c-step-num">3</span><span class="c-step-title">Improvements</span>
+        </div>
+        <div class="c-step-line"></div>
+        <div class="c-step" data-step="4" tabindex="0" role="button" aria-label="Step 4: Mock Interview">
+          <span class="c-step-num">4</span><span class="c-step-title">Mock Interview</span>
+        </div>
+        <div class="c-step-line"></div>
+        <div class="c-step" data-step="5" tabindex="0" role="button" aria-label="Step 5: Readiness Report">
+          <span class="c-step-num">5</span><span class="c-step-title">Readiness Report</span>
+        </div>
+      </nav>
+
+      <!-- ── AI Analysis Sequence Overlay ───────────────────────── -->
+      <div id="c-analysis-seq" class="c-analysis-seq hidden" aria-live="polite" aria-label="Analysis in progress">
+        <div class="c-spinner-wrap" style="margin:0 auto 20px">
+          <div class="c-spinner-ring"></div>
+          <div class="c-spinner-icon">🧠</div>
+        </div>
+        <p class="c-analysis-seq-title">Analyzing Your Profile</p>
+        <p class="c-analysis-seq-sub">Mapping your skills against real job requirements</p>
+        <div class="c-analysis-steps" role="list">
+          <div class="c-analysis-step" id="seq-step-1" role="listitem"><div class="c-step-check">1</div>Reading resume</div>
+          <div class="c-analysis-step" id="seq-step-2" role="listitem"><div class="c-step-check">2</div>Extracting candidate signals</div>
+          <div class="c-analysis-step" id="seq-step-3" role="listitem"><div class="c-step-check">3</div>Mapping technical skills</div>
+          <div class="c-analysis-step" id="seq-step-4" role="listitem"><div class="c-step-check">4</div>Comparing job requirements</div>
+          <div class="c-analysis-step" id="seq-step-5" role="listitem"><div class="c-step-check">5</div>Identifying skill gaps</div>
+          <div class="c-analysis-step" id="seq-step-6" role="listitem"><div class="c-step-check">6</div>Building interview strategy</div>
+        </div>
+      </div>
+
+      <!-- ── Global Loading Screen ───────────────────────────────── -->
+      <div id="c-loading-screen" class="c-loading-screen hidden" aria-live="polite">
+        <div class="c-spinner-wrap">
+          <div class="c-spinner-ring"></div>
+          <div class="c-spinner-icon">🤖</div>
+        </div>
+        <h3 id="c-loading-title">Analyzing Your Profile...</h3>
+        <p id="c-loading-subtitle">Comparing resume against target role requirements</p>
+        <div class="c-loading-pulse-bar"><div class="c-loading-pulse-fill"></div></div>
+      </div>
+
+      <!-- ── STAGE 1: Profile Setup & Job Target ────────────────── -->
+      <section id="c-setup-stage" class="c-stage">
+        <div class="dashboard-grid c-setup-grid">
+
+          <!-- Resume Input -->
+          <article class="panel reveal">
+            <div class="panel-header-with-badge">
+              <h2>1. Upload Resume</h2>
+              <div style="display:flex;gap:6px;align-items:center">
+                <span class="c-demo-label">DEMO</span>
+                <span class="badge neutral">Step 1 of 5</span>
+              </div>
             </div>
-            <p class="field-note">
-              Candidate name and years of experience are auto-extracted from resume content.
+            <p class="field-note">Paste your plain text resume or upload a PDF/DOCX file.</p>
+
+            <div class="c-input-tabs" role="tablist" aria-label="Resume input mode">
+              <button class="c-input-tab active" id="c-tab-text" data-ctab="text" role="tab" aria-selected="true">📝 Paste Text</button>
+              <button class="c-input-tab" id="c-tab-file" data-ctab="file" role="tab" aria-selected="false">📁 Upload File</button>
+            </div>
+
+            <div id="c-resume-text-panel" class="c-input-panel">
+              <div class="textarea-header">
+                <label for="c-resume-text">Resume Content</label>
+              </div>
+              <textarea id="c-resume-text" rows="11" placeholder="Paste your resume content here (experience, skills, achievements, education)..."></textarea>
+              <div class="input-char-counter"><span id="c-resume-char-count">0</span> characters</div>
+            </div>
+
+            <div id="c-resume-file-panel" class="c-input-panel hidden">
+              <input id="c-resume-file-input" class="hidden-file-input" type="file" accept=".pdf,.docx,.txt" />
+              <div id="c-drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Upload your resume document">
+                <div class="drop-icon">📄</div>
+                <p class="drop-title">Drag &amp; drop your resume here</p>
+                <p class="drop-subtitle">Supports PDF, DOCX, or TXT formats</p>
+                <button type="button" class="btn btn-secondary btn-sm" style="margin-top:10px">Browse Files</button>
+              </div>
+              <div id="c-file-status" class="c-file-badge hidden">
+                <span class="c-file-badge-icon">📎</span>
+                <span id="c-file-name">Selected File</span>
+                <button type="button" id="c-file-remove-btn" class="c-file-remove" title="Remove file">✕</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Target Job Input -->
+          <article class="panel reveal">
+            <div class="panel-header-with-badge">
+              <h2>2. Target Job Context</h2>
+              <div style="display:flex;gap:6px;align-items:center">
+                <span class="c-demo-label">DEMO</span>
+                <span class="badge neutral">Step 1 of 5</span>
+              </div>
+            </div>
+            <p class="field-note">Provide the job title and description you're aiming for.</p>
+
+            <div class="preset-roles-wrap">
+              <span class="preset-label">Quick Presets:</span>
+              <button type="button" class="btn-preset" data-preset="backend">Backend Engineer</button>
+              <button type="button" class="btn-preset" data-preset="fullstack">Full Stack React/Node</button>
+              <button type="button" class="btn-preset" data-preset="ai_engineer">AI/ML Engineer</button>
+            </div>
+
+            <label for="c-job-title">Job Title</label>
+            <input id="c-job-title" placeholder="e.g. Senior Python Backend Engineer" required />
+
+            <label for="c-job-desc">Job Description</label>
+            <textarea id="c-job-desc" rows="8" placeholder="Paste the job description including responsibilities and technical requirements..." required></textarea>
+
+            <div class="actions" style="margin-top:16px">
+              <button id="c-analyze-btn" class="btn btn-primary btn-full btn-lg">
+                Analyse Skill Gap &amp; Profile →
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── STAGE 2: Skill Gap Analysis ───────────────────────── -->
+      <section id="c-analysis-stage" class="c-stage hidden">
+
+        <div class="c-section-header">
+          <div>
+            <span class="badge good">Stage 2 of 5</span>
+            <h2>Skill Gap &amp; Intelligence Map</h2>
+          </div>
+          <div style="display:flex; gap:8px">
+            <button class="btn btn-secondary" id="c-export-partial-btn">📥 Export Analysis (.html)</button>
+            <button class="btn btn-ghost" id="c-back-setup">← Edit Inputs</button>
+          </div>
+        </div>
+
+        <!-- Metric Header Cards -->
+        <div class="c-metric-row">
+          <div class="c-metric-card">
+            <span class="c-metric-title">Overall Match</span>
+            <span id="c-match-pct-val" class="c-metric-val">0%</span>
+            <span id="c-match-severity-badge" class="badge">--</span>
+          </div>
+          <div class="c-metric-card">
+            <span class="c-metric-title">Skills Matched</span>
+            <span id="c-matched-count" class="c-metric-val">0 / 0</span>
+            <span class="c-metric-sub">Exact &amp; Semantic</span>
+          </div>
+          <div class="c-metric-card">
+            <span class="c-metric-title">Skill Gaps</span>
+            <span id="c-missing-count" class="c-metric-val">0</span>
+            <span class="c-metric-sub">Missing required</span>
+          </div>
+        </div>
+
+        <div class="c-analysis-grid" style="margin-top:16px">
+
+          <!-- Skill Taxonomy Breakdown -->
+          <article class="panel reveal">
+            <h3>Skill Taxonomy Breakdown</h3>
+            <p class="field-note">Categorized breakdown from parsing your resume against job keywords.</p>
+
+            <div class="c-skill-groups">
+              <div class="c-skill-box matched-box">
+                <div class="c-skill-box-header">
+                  <span class="c-skill-group-label matched-label">✅ Matched Skills</span>
+                  <span id="c-matched-cnt-badge" class="badge good">0</span>
+                </div>
+                <div id="c-matched-skills" class="pill-row"></div>
+              </div>
+              <div class="c-skill-box partial-box">
+                <div class="c-skill-box-header">
+                  <span class="c-skill-group-label partial-label">🔶 Semantic / Related</span>
+                  <span id="c-partial-cnt-badge" class="badge warn">0</span>
+                </div>
+                <div id="c-partial-skills" class="pill-row"></div>
+              </div>
+              <div class="c-skill-box missing-box">
+                <div class="c-skill-box-header">
+                  <span class="c-skill-group-label missing-label">❌ Missing Required Skills</span>
+                  <span id="c-missing-cnt-badge" class="badge bad">0</span>
+                </div>
+                <div id="c-missing-skills" class="pill-row"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- AI Narrative & Next Step -->
+          <article class="panel reveal flex-col-between">
+            <div>
+              <h3>AI Coaching Narrative</h3>
+              <div id="c-narrative" class="c-narrative-box"><p>Analyzing profile...</p></div>
+            </div>
+            <div class="next-step-callout">
+              <p>Next step: Review resume improvement recommendations to close identified gaps.</p>
+              <button id="c-goto-improvements-btn" class="btn btn-primary btn-full">View Resume Improvements →</button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Skill Constellation / Intelligence Map -->
+        <article class="panel reveal" style="margin-top:16px">
+          <div class="panel-header-with-badge">
+            <h3>Skill Intelligence Map</h3>
+            <span class="badge info">Interactive · Hover for details</span>
+          </div>
+          <p class="field-note">Visual representation of your matched, related, and missing skills relative to job requirements. Click any skill node for details.</p>
+
+          <div class="c-constellation-wrap" id="c-constellation-wrap">
+            <!-- SVG Map (desktop) -->
+            <div class="c-constellation-svg-container" id="c-constellation-svg-container">
+              <svg class="c-constellation-svg" id="c-constellation-svg" aria-label="Skill Intelligence Map" role="img"></svg>
+              <!-- Skill tooltip detail card -->
+              <div class="c-skill-tooltip" id="c-skill-tooltip" role="tooltip" aria-live="polite">
+                <button class="c-tooltip-close" id="c-tooltip-close" aria-label="Close skill detail">✕</button>
+                <div class="c-tooltip-name" id="c-tooltip-name">Skill Name</div>
+                <span class="c-tooltip-status" id="c-tooltip-status">Matched</span>
+                <div id="c-tooltip-body" style="font-size:12px; color:var(--muted); line-height:1.5"></div>
+              </div>
+            </div>
+            <!-- Responsive card fallback (mobile) -->
+            <div class="c-constellation-cards" id="c-constellation-cards">
+              <div class="c-constellation-card-group">
+                <div class="c-constellation-card-title" style="color:#15803d">✅ Matched Skills</div>
+                <div class="c-constellation-card-pills" id="c-const-matched"></div>
+              </div>
+              <div class="c-constellation-card-group">
+                <div class="c-constellation-card-title" style="color:#92400e">🔶 Related / Semantic</div>
+                <div class="c-constellation-card-pills" id="c-const-partial"></div>
+              </div>
+              <div class="c-constellation-card-group">
+                <div class="c-constellation-card-title" style="color:#b91c1c">❌ Missing Required</div>
+                <div class="c-constellation-card-pills" id="c-const-missing"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ── STAGE 3: Resume Improvements ──────────────────────── -->
+      <section id="c-improvements-stage" class="c-stage hidden">
+
+        <div class="c-section-header">
+          <div>
+            <span class="badge good">Stage 3 of 5</span>
+            <h2>Resume Improvement Recommendations</h2>
+          </div>
+          <button class="btn btn-ghost" id="c-back-analysis">← Skill Gap</button>
+        </div>
+
+        <article class="panel reveal">
+          <div class="panel-header-with-badge">
+            <h3>Targeted Action Items to Boost Resume Score</h3>
+            <div style="display:flex;gap:6px">
+              <span class="c-demo-label">DEMO</span>
+              <span class="badge info">AI &amp; Rule Generated</span>
+            </div>
+          </div>
+          <p class="field-note">Prioritized actionable tweaks for your resume before submitting to recruiters.</p>
+
+          <div id="c-improvements-list" class="c-improvements-grid"></div>
+
+          <div class="c-stage-footer-actions">
+            <button id="c-goto-prep-btn" class="btn btn-primary btn-lg">
+              Proceed to Mock Interview →
+            </button>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ── STAGE 4: Mock Interview ────────────────────────────── -->
+      <section id="c-interview-stage" class="c-stage hidden">
+
+        <div class="c-section-header">
+          <div>
+            <span class="badge good">Stage 4 of 5</span>
+            <h2>Adaptive Mock Interview</h2>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span id="c-q-counter" class="badge good">Q 1 of 5</span>
+            <span id="c-q-type-badge" class="badge info">planned</span>
+          </div>
+        </div>
+
+        <!-- Question progress bar -->
+        <div class="c-question-progress">
+          <div class="c-q-progress-meta">
+            <span id="c-q-progress-label">Question 1 of 5</span>
+            <span id="c-q-percent">0%</span>
+          </div>
+          <div class="c-q-progress-bar">
+            <div class="c-q-progress-fill" id="c-q-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Adaptive follow-up badge -->
+        <div class="c-adaptive-badge" id="c-adaptive-badge" aria-live="polite">
+          ⚡ Follow-up based on your previous answer
+        </div>
+
+        <!-- Question Card -->
+        <article class="panel c-question-card reveal" id="c-question-card">
+          <div class="c-question-meta-bar">
+            <span class="c-question-topic" id="c-q-topic">Topic: Architecture</span>
+            <span class="badge difficulty-badge" id="c-q-difficulty">Medium</span>
+          </div>
+          <h3 class="c-question-text" id="c-q-text">Loading question...</h3>
+        </article>
+
+        <!-- Answer Input Box -->
+        <article class="panel reveal">
+          <div class="panel-header-with-badge">
+            <label for="c-answer-text"><strong>Your Answer</strong></label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="btn-demo-answer" id="c-demo-answer-btn" aria-label="Use demo answer">✨ Use Demo Answer</button>
+              <span class="field-note">Tip: <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to submit</span>
+            </div>
+          </div>
+
+          <textarea id="c-answer-text" rows="7" placeholder="Type your technical response here. Provide specific context, design choices, and trade-offs..."></textarea>
+
+          <!-- Evaluation loading state -->
+          <div class="c-eval-loading" id="c-eval-loading" aria-live="polite">
+            <div class="c-eval-dots"><span></span><span></span><span></span></div>
+            Evaluating your response...
+          </div>
+
+          <div class="actions flex-between" style="margin-top:12px">
+            <span id="c-answer-status" class="c-answer-status"></span>
+            <button id="c-submit-answer-btn" class="btn btn-primary btn-lg">Submit Answer →</button>
+          </div>
+        </article>
+
+        <!-- Dynamic Answer Evaluation History Stream -->
+        <div id="c-feedback-history" class="c-feedback-stream"></div>
+
+        <!-- Interview Complete — view report button -->
+        <div id="c-view-report-wrap" class="hidden" style="text-align:center;margin-top:20px">
+          <button id="c-view-report-btn" class="btn btn-primary btn-lg">📊 View Readiness Report →</button>
+        </div>
+
+      </section>
+
+      <!-- ── STAGE 4 (pre-interview): Interview Blueprint ────────── -->
+      <section id="c-prep-stage" class="c-stage hidden">
+
+        <div class="c-section-header">
+          <div>
+            <span class="badge good">Stage 4 of 5</span>
+            <h2>Mock Interview Blueprint</h2>
+          </div>
+          <button class="btn btn-ghost" id="c-back-improvements">← Improvements</button>
+        </div>
+
+        <div class="dashboard-grid">
+
+          <article class="panel reveal">
+            <h3>Interview Settings</h3>
+            <p class="field-note">Customize the structure of your adaptive AI mock interview session.</p>
+
+            <label for="c-prep-max-questions">Session Question Count</label>
+            <select id="c-prep-max-questions" class="form-control-lg">
+              <option value="5" selected>5 Questions (Standard ~15 mins)</option>
+              <option value="7">7 Questions (Deep Dive ~25 mins)</option>
+              <option value="10">10 Questions (Full Technical Loop ~35 mins)</option>
+            </select>
+
+            <div class="c-info-card" style="margin-top:14px">
+              <div class="c-info-icon">💡</div>
+              <div class="c-info-text">
+                <strong>Adaptive AI Evaluation:</strong> Questions adapt based on your previous answers. If a response reveals a gap, the coach may introduce a targeted follow-up question.
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top:20px">
+              <button id="c-start-interview-btn" class="btn btn-primary btn-full btn-lg">🚀 Launch Mock Interview</button>
+            </div>
+          </article>
+
+          <article class="panel reveal">
+            <h3>Target Competencies &amp; Focus Areas</h3>
+            <p class="field-note">Questions will target these core requirements and your skill gap areas.</p>
+            <div id="c-prep-focus-list" class="c-focus-tags-grid"></div>
+          </article>
+
+        </div>
+
+      </section>
+
+      <!-- ── STAGE 5: Readiness Report & Roadmap ────────────────── -->
+      <section id="c-report-stage" class="c-stage hidden">
+
+        <div class="c-section-header">
+          <div>
+            <span class="badge good">Stage 5 of 5</span>
+            <h2>Interview Readiness Report</h2>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span id="c-assessment-badge" class="c-assessment-badge preliminary">Preliminary</span>
+            <p class="c-ai-disclaimer">⚠️ AI-estimated guidance based on weighted deterministic formulas.</p>
+          </div>
+        </div>
+
+        <!-- Readiness Orbit + Score Breakdown -->
+        <div class="c-report-top" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+          <!-- Animated Readiness Orbit -->
+          <article class="panel c-gauge-card reveal" id="c-orbit-card">
+            <h3>Overall Readiness Score</h3>
+            <div class="c-orbit-wrap">
+              <svg class="c-orbit-svg" id="c-orbit-svg" viewBox="0 0 300 300" aria-label="Readiness orbit visualization" role="img">
+                <!-- Orbit tracks -->
+                <circle class="orbit-track" cx="150" cy="150" r="110"/>
+                <!-- Center score text -->
+                <text class="c-orbit-center-score" id="c-orbit-score" x="150" y="140">—</text>
+                <text class="c-orbit-center-label" x="150" y="160">READINESS SCORE</text>
+                <text class="c-orbit-center-band" id="c-orbit-band" x="150" y="178" fill="#0e8a8c">Evaluating...</text>
+                <!-- Signal nodes rendered by JS -->
+                <g id="c-orbit-signals"></g>
+              </svg>
+            </div>
+            <p class="c-ai-disclaimer" style="margin-top:8px">
+              Formula: Skill Coverage (25%) + Resume Match (25%) + Interview Perf (35%) + Experience (15%)
             </p>
-            <div id="upload-preview" class="upload-preview empty-state">
-              <p>No files selected.</p>
-            </div>
-            <div id="preview-status" class="preview-status hidden"></div>
-            <div id="profile-preview-cards" class="profile-preview-cards empty-state">
-              <p>Parsed profile previews will appear here.</p>
-            </div>
-          </section>
+          </article>
 
-          <div class="actions">
-            <button type="button" class="btn btn-secondary" id="add-candidate">Add Candidate</button>
-            <button type="submit" class="btn btn-primary">Run AI Screening</button>
+          <!-- Score Component Breakdown Bars -->
+          <article class="panel reveal">
+            <div class="panel-header-with-badge">
+              <h3>Score Component Breakdown</h3>
+              <span class="badge info">Weighted Formula</span>
+            </div>
+            <div id="c-score-breakdown" class="c-breakdown-list score-bar-animated"></div>
+          </article>
+
+        </div>
+
+        <!-- AI Executive Debrief -->
+        <article class="panel reveal" id="c-narrative-card" style="margin-top:16px">
+          <div class="panel-header-with-badge">
+            <h3>AI Coaching Debrief</h3>
+            <span class="badge info">AI-Assisted Estimate</span>
           </div>
-        </form>
-      </article>
+          <p id="c-report-narrative" class="c-narrative-text"></p>
+        </article>
 
-      <article class="panel panel-results reveal">
-        <div class="results-header">
-          <h2>Leaderboard</h2>
-          <p id="result-subtitle">Run an analysis to view ranked candidates.</p>
+        <!-- Preparation Roadmap -->
+        <article class="panel reveal" style="margin-top:16px">
+          <div class="panel-header-with-badge">
+            <h3>Personalized Preparation Roadmap</h3>
+            <span class="badge good">Action Plan</span>
+          </div>
+          <p class="field-note">Follow these prioritized steps to optimize your candidate profile before your next interview.</p>
+          <div id="c-roadmap" class="c-roadmap-timeline"></div>
+        </article>
+
+        <div class="actions flex-between" style="margin-top:20px">
+          <button id="c-restart-btn" class="btn btn-secondary btn-lg">🔄 Start New Analysis</button>
+          <button id="c-export-report-btn" class="btn btn-primary btn-lg">📥 Export Readiness Report (.html)</button>
         </div>
 
-        <div id="status-banner" class="status-banner hidden"></div>
+      </section>
 
-        <div id="leaderboard" class="leaderboard empty-state">
-          <p>No results yet. Use the form to generate a shortlist.</p>
-        </div>
-      </article>
-    </section>
+    </div><!-- /candidate-view -->
 
-    <section class="panel comparison-panel reveal">
-      <h2>Candidate Comparison</h2>
-      <div class="comparison-controls">
-        <div>
-          <label for="compare-a">Candidate A</label>
-          <select id="compare-a"></select>
-        </div>
-        <div>
-          <label for="compare-b">Candidate B</label>
-          <select id="compare-b"></select>
-        </div>
-      </div>
-      <div id="comparison-content" class="comparison-content empty-state">
-        <p>Run analysis and select two candidates to compare score components.</p>
-      </div>
-    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong>TalentRank Studio</strong>
+        <span class="footer-tagline">AI-powered hiring intelligence</span>
+      </div>
+      <div class="footer-links">
+        <a href="/docs" target="_blank" rel="noopener">API Docs</a>
+        <a href="https://github.com/prashantsingh5/TalentRank-Studio-AI-Resume-Screening" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 TalentRank Studio. Built with FastAPI &amp; Python.</p>
+    </div>
+  </footer>
 
   <template id="candidate-template">
     <div class="candidate-item">
@@ -146,5 +733,6 @@
   </template>
 
   <script src="/static/app.js"></script>
+  <script src="/static/candidate.js"></script>
 </body>
 </html>

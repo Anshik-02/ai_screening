@@ -467,3 +467,36 @@ addCandidate({
 
   updateModeVisibility();
   updateUploadPreview();
+
+// =============================================================================
+// Minimal SPA View Router
+// =============================================================================
+
+function switchMode(mode) {
+  const recruiterView = document.getElementById("recruiter-view");
+  const candidateView = document.getElementById("candidate-view");
+  const navRecruiter = document.getElementById("nav-recruiter");
+  const navCandidate = document.getElementById("nav-candidate");
+
+  const isRecruiter = mode === "recruiter";
+
+  recruiterView.classList.toggle("hidden", !isRecruiter);
+  candidateView.classList.toggle("hidden", isRecruiter);
+
+  navRecruiter.classList.toggle("active", isRecruiter);
+  navRecruiter.setAttribute("aria-selected", isRecruiter ? "true" : "false");
+
+  navCandidate.classList.toggle("active", !isRecruiter);
+  navCandidate.setAttribute("aria-selected", !isRecruiter ? "true" : "false");
+
+  window.location.hash = mode;
+}
+
+document.getElementById("nav-recruiter")?.addEventListener("click", () => switchMode("recruiter"));
+document.getElementById("nav-candidate")?.addEventListener("click", () => switchMode("candidate"));
+
+// Initial route check on page load
+if (window.location.hash === "#candidate") {
+  switchMode("candidate");
+}
+
