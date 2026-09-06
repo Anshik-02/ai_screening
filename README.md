@@ -11,6 +11,7 @@
 
 **Explainable candidate ranking with semantic skill matching, drag-drop uploads, and recruiter-ready shortlist workflows.**
 
+[Friends Quick Setup Guide](FRIENDS_SETUP_GUIDE.md) •
 [Quick Start](#quick-start) •
 [Features](#features) •
 [Demo](#demo) •
@@ -41,10 +42,6 @@ TalentRank Studio solves this with a practical workflow:
 | Auto Profile Extraction | Infers candidate name and years of experience from resume text. |
 | Drag-and-Drop Upload | Recruiter dashboard supports direct file drop and parse preview. |
 | Comparison View | Compare two candidates with score components and evidence. |
-| Candidate Mode | 5-stage guided journey: skill gap analysis, resume improvements, mock interview, readiness report. |
-| AI Coaching (optional) | OpenAI-powered mock interviews and coaching when API key is configured. |
-
-> **New to the project?** See [SETUP.md](SETUP.md) for step-by-step install instructions you can share with anyone.
 
 ## Demo
 

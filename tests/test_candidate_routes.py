@@ -39,7 +39,7 @@ JOB_DESC = (
 
 
 def test_analyze_endpoint_returns_skill_gap():
-    with patch.dict("os.environ", {"OPENAI_API_KEY": ""}, clear=False):
+    with patch.dict("os.environ", {"OPENAI_API_KEY": "", "GEMINI_API_KEY": ""}, clear=False):
         resp = client.post(
             "/v1/candidate/analyze",
             json={"resume_text": RESUME_TEXT, "job_title": JOB_TITLE, "job_description": JOB_DESC},
@@ -61,7 +61,7 @@ def test_analyze_endpoint_validates_short_resume():
 
 def test_analyze_file_endpoint():
     payload = b"Name: Alex\nYears of Experience: 3\nPython FastAPI Docker AWS PostgreSQL"
-    with patch.dict("os.environ", {"OPENAI_API_KEY": ""}, clear=False):
+    with patch.dict("os.environ", {"OPENAI_API_KEY": "", "GEMINI_API_KEY": ""}, clear=False):
         resp = client.post(
             "/v1/candidate/analyze-file",
             data={"job_title": JOB_TITLE, "job_description": JOB_DESC},

@@ -290,18 +290,24 @@ function renderLeaderboard(candidates) {
     .map((candidate, index) => {
       const hardClass = candidate.hard_constraint_passed ? "good" : "warn";
       const hardLabel = candidate.hard_constraint_passed ? "Hard Constraint Passed" : "Hard Constraint Risk";
+      const rankBadge = index === 0 ? '<span class="rank-badge rank-1">🥇 Top Pick</span>' :
+                        index === 1 ? '<span class="rank-badge rank-2">🥈 Rank 2</span>' :
+                        index === 2 ? '<span class="rank-badge rank-3">🥉 Rank 3</span>' : `<span class="rank-badge rank-sub">#${index + 1}</span>`;
 
       return `
-        <article class="candidate-card" style="animation-delay:${index * 80}ms">
+        <article class="candidate-card ${index === 0 ? 'top-card' : ''}" style="animation-delay:${index * 80}ms">
           <div class="candidate-top">
-            <h3>${candidate.name}</h3>
+            <div style="display:flex;align-items:center;gap:10px;">
+              ${rankBadge}
+              <h3 style="margin:0;">${candidate.name}</h3>
+            </div>
             <span class="badge ${hardClass}">${hardLabel}</span>
           </div>
-          ${scoreBar("Total", candidate.total_score)}
+          ${scoreBar("Total Score", candidate.total_score)}
           ${scoreBar("Required Skill", candidate.skill_score)}
-          ${scoreBar("Must-Have", candidate.must_have_match_rate)}
-          ${scoreBar("Nice-To-Have", candidate.nice_to_have_match_rate)}
-          ${scoreBar("Experience", candidate.experience_score)}
+          ${scoreBar("Must-Have Match", candidate.must_have_match_rate)}
+          ${scoreBar("Nice-To-Have Match", candidate.nice_to_have_match_rate)}
+          ${scoreBar("Experience Fit", candidate.experience_score)}
           <div>
             <strong>Matched Skills:</strong>
             <div class="pill-row">${candidate.matched_skills.map((skill) => `<span class="pill">${skill}</span>`).join("") || "<span class='pill'>none</span>"}</div>
